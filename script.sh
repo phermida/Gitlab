@@ -14,15 +14,16 @@ sudo apt-get install \
     ca-certificates \
     curl \
     software-properties-common -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
 sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
    stable" -y
 sudo apt-get update -y
 sudo apt-get install docker-ce -y
-sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose -y
-sudo chmod +x /usr/local/bin/docker-compose -y
+sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 echo "web:
   image: 'gitlab/gitlab-ce:latest'
   restart: always
@@ -38,6 +39,6 @@ echo "web:
   volumes:
     - '/srv/gitlab/config:/etc/gitlab'
     - '/srv/gitlab/logs:/var/log/gitlab'
-    - '/srv/gitlab/data:/var/opt/gitlab'" > docker-compose.yml -y
-docker-compose up -d -y
+    - '/srv/gitlab/data:/var/opt/gitlab'" > docker-compose.yml
+docker-compose up -d
 
