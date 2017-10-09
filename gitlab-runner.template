@@ -1,0 +1,62 @@
+#Template for gitlab-runner
+
+#Mounting a config volume into the gitlab-runner container to be used for configs and other resources:
+docker run -d --name gitlab-runner --restart always \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  gitlab/gitlab-runner:latest
+  
+  #If you plan on using Docker as the method of spawning Runners, you will need to mount your docker socket like this:
+  docker run -d --name gitlab-runner --restart always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  gitlab/gitlab-runner:latest
+
+#From here, same steps for both dockers:
+docker exec -it gitlab-runner bash
+
+#Registering the runner/s:
+gitlab-runner register
+
+#Enter your GitLab instance URL:
+Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )
+https://gitlab.com
+
+#Enter the token you obtained to register the Runner:
+Please enter the gitlab-ci token for this runner
+[Gitlab UI -> admin -> runners]
+
+#Enter a description for the Runner, you can change this later in GitLab's UI:
+Please enter the gitlab-ci description for this runner
+[hostame] my-runner
+
+#Enter the tags associated with the Runner, you can change this later in GitLab's UI:
+Please enter the gitlab-ci tags for this runner (comma separated):
+my-tag,another-tag
+
+#Choose whether the Runner should pick up jobs that do not have tags, you can change this later in GitLab's UI (defaults to false):
+Whether to run untagged jobs [true/false]:
+[false]: true
+
+#Choose whether to lock the Runner to the current project, you can change this later in GitLab's UI. Useful when the Runner is specific (defaults to true):
+Whether to lock Runner to current project [true/false]:
+[true]: true
+
+#Enter the Runner executor:
+Please enter the executor: ssh, docker+machine, docker-ssh+machine, kubernetes, docker, parallels, virtualbox, docker-ssh, shell:
+docker
+
+[#If you chose Docker as your executor, you'll be asked for the default image to be used for projects that do not define one in .gitlab-ci.yml:
+Please enter the Docker image (eg. ruby:2.1):
+alpine:latest]
+
+
+
+
+
+
+
+
+
+
+
