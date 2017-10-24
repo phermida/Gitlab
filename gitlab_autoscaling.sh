@@ -32,6 +32,8 @@ docker exec -it gitlab-runner gitlab-runner register
 
 #5. OpenNebula plugin
 #5.1.1 Install GO
+apt-get update
+apt-get install software-properties-common -y
 sudo add-apt-repository ppa:gophers/archive
 sudo apt update
 sudo apt-get install golang-1.6-go -y
