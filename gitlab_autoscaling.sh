@@ -34,7 +34,7 @@ docker exec -it gitlab-runner gitlab-runner register
 #5.1.1 Install GO
 sudo add-apt-repository ppa:gophers/archive
 sudo apt update
-sudo apt-get install golang-1.6.2-go -y
+sudo apt-get install golang-1.6-go -y
 sudo apt-get install bzr -y
 #5.1.2 Set GOPATH:
 echo "export GOPATH=$HOME/work" > ~/.bash_profile
