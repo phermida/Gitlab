@@ -12,6 +12,9 @@ docker run -d --name gitlab-runner --restart always \
   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
   gitlab/gitlab-runner:latest -y
   
+#Después de esto se ejecutará los siguientes comandos dentro del docker?  
+docker exec -it gitlab-runner bash  
+
 #3. Install Docker Machine following the Docker Machine installation documentation
 #3.1 Download the Docker Machine binary and extract it to your PATH.
 curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine &&
