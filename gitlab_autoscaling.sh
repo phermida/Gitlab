@@ -35,7 +35,7 @@ sudo apt-get install golang-go -y
 #5.1.2 Set GOPATH:
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
-echo "export GOPATH=$HOME/work" > ~/.bash_profile
+echo "export GOPATH=$HOME/work" >> ~/.bash_profile
 source ~/.bash_profile
 #5.1.3 Install GODEP
 sudo go get github.com/tools/godep -y
@@ -45,4 +45,5 @@ cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula
 make build
 make install
 #5.3 Set up ONE_AUTH and ONE_XMLRPC to point to the OpenNebula cloud
-echo "export ONE_LOCATION=\nexport ONE_AUTH=$HOME/work/one_auth\nexport ONE_XMLRPC=http://nebula.cesga.es:2633/RPC2\nexport PATH=$HOME/work/bin:$PATH" > ~/.bash_profile
+echo "export ONE_LOCATION=\nexport ONE_AUTH=$HOME/work/one_auth\nexport ONE_XMLRPC=http://nebula.cesga.es:2633/RPC2\nexport PATH=$HOME/work/bin:$PATH" >> ~/.bash_profile
+source ~/.bash_profile
