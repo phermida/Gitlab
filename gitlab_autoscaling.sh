@@ -1,4 +1,5 @@
 #Preparing the environment
+#!/bin/bash
 
 #1. Login to a new Linux-based machine that will serve as a bastion server and where Docker will spawn new machines from
 apt-get update
@@ -31,17 +32,22 @@ docker exec -it gitlab-runner gitlab-runner register
 
 #5. OpenNebula plugin
 #5.1.1 Install GO
-sudo apt-get install golang-go -y
+sudo add-apt-repository ppa:gophers/archive
+sudo apt update
+sudo apt-get install golang-1.6.2-go
+sudo apt-get install bzr -y
 #5.1.2 Set GOPATH:
+echo "export GOPATH=$HOME/work" > ~/.bash_profile
+source ~/.bash_profile
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
-echo "export GOPATH=$HOME/work" >> ~/.bash_profile
-source ~/.bash_profile
+export GOBIN=$HOME/work/bin
 #5.1.3 Install GODEP
-sudo go get github.com/tools/godep -y
+go get github.com/tools/godep
 #5.2 Building the plugin binary
 go get github.com/OpenNebula/docker-machine-opennebula
 cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula
+apt-get install make -y
 make build
 make install
 #5.3 Set up ONE_AUTH and ONE_XMLRPC to point to the OpenNebula cloud
