@@ -1,7 +1,7 @@
 #Preparing the environment
 
 #1. Login to a new Linux-based machine that will serve as a bastion server and where Docker will spawn new machines from
-
+apt-get update
 #2. Install GitLab Runner following the GitLab Runner installation documentation
 #2.1 Install Docker first:
 curl -sSL https://get.docker.com/ | sh
