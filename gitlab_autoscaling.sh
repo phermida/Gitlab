@@ -36,12 +36,11 @@ docker exec -it gitlab-runner gitlab-runner register
 #5. OpenNebula plugin
 #5.1.1 Install GO
 apt-get update
-apt-get install software-properties-common -y
-sudo add-apt-repository ppa:gophers/archive
-sudo apt update
-sudo apt-get install golang-1.6-go -y
+#Check version (works with 1.6.2)
+apt-get install golang-go
 sudo apt-get install bzr -y
 #5.1.2 Set GOPATH:
+#Dont know if its the right order of commands
 echo "export GOPATH=$HOME/work" > ~/.bash_profile
 source ~/.bash_profile
 export PATH=$PATH:$(go env GOPATH)/bin
