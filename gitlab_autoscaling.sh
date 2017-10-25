@@ -50,10 +50,10 @@ source ~/.profile
 sudo apt-get install bzr -y
 #5.1.2 Set GOPATH:
 #Dont know if its the right order of commands
-echo "export GOPATH=$HOME/work" > ~/.bash_profile
-source ~/.bash_profile
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
+echo "export GOPATH=$HOME/work" > ~/.bash_profile
+source ~/.bash_profile
 export GOBIN=$HOME/work/bin
 #5.1.3 Install GODEP
 go get github.com/tools/godep
