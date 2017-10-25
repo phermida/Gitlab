@@ -16,6 +16,7 @@ docker run -d --name gitlab-runner --restart always \
 docker exec -it gitlab-runner bash  
 
 #3. Install Docker Machine following the Docker Machine installation documentation
+apt-get update
 #3.1 Download the Docker Machine binary and extract it to your PATH.
 curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine &&
 chmod +x /tmp/docker-machine &&
@@ -36,8 +37,16 @@ docker exec -it gitlab-runner gitlab-runner register
 #5. OpenNebula plugin
 #5.1.1 Install GO
 apt-get update
-#Check version (works with 1.6.2)
-apt-get install golang-go
+#Golang-go1.6 on Ubuntu14.04
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo curl -O https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz
+sudo tar -xvf go1.6.linux-amd64.tar.gz
+#/usr o /usr/local?
+sudo mv go /usr/local
+#Setting up GOPATH 
+echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+source ~/.profile
 sudo apt-get install bzr -y
 #5.1.2 Set GOPATH:
 #Dont know if its the right order of commands
@@ -49,6 +58,7 @@ export GOBIN=$HOME/work/bin
 #5.1.3 Install GODEP
 go get github.com/tools/godep
 #5.2 Building the plugin binary
+apt-get install gcc -y
 go get github.com/OpenNebula/docker-machine-opennebula
 cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula
 apt-get install make -y
