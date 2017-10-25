@@ -65,5 +65,5 @@ apt-get install make -y
 make build
 make install
 #5.3 Set up ONE_AUTH and ONE_XMLRPC to point to the OpenNebula cloud
-echo -e "export ONE_LOCATION=\nexport ONE_AUTH=$HOME/work/one_auth\nexport ONE_XMLRPC=http://nebula.cesga.es:2633/RPC2\nexport PATH=$HOME/work/bin:$PATH" >> ~/.bash_profile
+echo -e "export ONE_LOCATION=\nexport ONE_AUTH=$HOME/work/one_auth\nexport ONE_XMLRPC=http://nebula.cesga.es:2633/RPC2\nexport PATH=$HOME/work/bin:$PATH" >> ~/.profile
 source ~/.bash_profile
