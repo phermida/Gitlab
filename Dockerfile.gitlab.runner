@@ -38,4 +38,4 @@ ENV PATH $HOME/work/bin:$PATH
 EXPOSE 2633
 
 
-CMD ["/usr/sbin/gitlab-runner", "run"]
+CMD ["run", "--user=gitlab-runner", "--working-directory=/home/gitlab-runner"]
