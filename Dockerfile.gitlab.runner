@@ -1,0 +1,41 @@
+#Dockerfile with the full deployment of gitlab-runner+docker-machine+opennebula-plugin
+FROM gitlab/gitlab-runner:10.1.0
+
+RUN apt-get update && \
+curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
+chmod +x /tmp/docker-machine && \
+sudo cp /tmp/docker-machine /usr/local/bin/docker-machine && \
+cd ~/etc/bash_completion.d && \
+scripts=( docker-machine-prompt.bash docker-machine-wrapper.bash docker-machine.bash ); for i in "${scripts[@]}"; do sudo wget https://raw.githubusercontent.com/docker/machine/v0.13.0/contrib/completion/bash/${i} -P /etc/bash_completion.d; done && \
+cd && \
+docker exec -it gitlab-runner gitlab-runner register
+
+RUN apt-get update && \
+apt-get -y upgrade && \
+curl -O https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz && \
+tar -xvf go1.6.linux-amd64.tar.gz && \
+mv go /usr/local && \
+apt-get install bzr -y && \
+export PATH=$PATH:$(go env GOPATH)/bin && \
+export GOPATH=$(go env GOPATH) && \
+export GOBIN=$HOME/work/bin && \
+go get github.com/tools/godep && \
+apt-get install gcc -y && \
+go get github.com/OpenNebula/docker-machine-opennebula && \
+cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula && \
+apt-get install make -y && \
+make build && \
+make install && \
+echo "tec_sis4:tec_sis4" > /work/one_auth
+
+ENV PS1 '[\u@\h \W$(__docker_machine_ps1)]\$ '
+ENV PATH $PATH:/usr/local/go/bin
+ENV GOPATH $HOME/work
+ENV ONE_AUTH $HOME/work/one_auth
+ENV ONE_XMLRPC http://nebula.cesga.es:2633/RPC2
+ENV PATH $HOME/work/bin:$PATH
+
+EXPOSE 2633
+
+
+CMD ["/usr/sbin/gitlab-runner", "run"]
