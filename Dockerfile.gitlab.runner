@@ -25,6 +25,7 @@ RUN export PATH=$PATH:$(go env GOPATH)/bin && \
 export GOPATH=$(go env GOPATH) && \
 go get github.com/tools/godep && \
 go get github.com/OpenNebula/docker-machine-opennebula && \
+sed -i 's/err = vm.TerminateHard()/err = vm.Action("delete")/g' $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula/opennebula.go && \
 cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula && \
 make build && \
 make install && \
@@ -39,3 +40,11 @@ EXPOSE 2633
 
 CMD ["run", "--user=gitlab-runner", "--working-directory=/home/gitlab-runner"]
 
+#Al terminar, registrar el runner y añadir el driver a config.toml
+#  [runners.machine]
+#    IdleCount = 0
+#    MachineDriver = "opennebula"
+#    MachineName = "job-runner-%s"
+#    MachineOptions = [
+#      "opennebula-template-id=565"
+#    ]
