@@ -10,29 +10,22 @@ ENV PS1 '[\u@\h \W$(__docker_machine_ps1)]\$ '
 
 RUN apt-get update && \
 apt-get -y upgrade && \
+apt-get install -y gcc make bzr && \
 curl -O https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz && \
 tar -xvf go1.6.linux-amd64.tar.gz && \
+rm go1.6.linux-amd64.tar.gz && \
 mv go /usr/local
 
 ENV PATH $PATH:/usr/local/go/bin
 ENV GOPATH $HOME/work
 
-RUN apt-get install -y bzr && \
-export PATH=$PATH:$(go env GOPATH)/bin && \
-export GOPATH=$(go env GOPATH)
+#export GOBIN=$HOME/work/bin && \
 
-RUN export GOBIN=$HOME/work/bin && \
-echo "-------------------------ANTES DEL GODEP----------------------" && \
+RUN export PATH=$PATH:$(go env GOPATH)/bin && \
+export GOPATH=$(go env GOPATH) && \
 go get github.com/tools/godep && \
-echo "-------------------------FUNCIONÓ GODEP----------------------" && \
-apt-get install -y gcc && \
 go get github.com/OpenNebula/docker-machine-opennebula && \
-echo "-------------------------ANTES DEL MAKE----------------------" && \
-apt-get install -y make && \
-apt-get install -y make-doc && \
-echo "----------------------DESPUES DEL MAKE-----------------------" && \
 cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula && \
-echo "----------------------ANTES DEL BUILD-----------------------" && \
 make build && \
 make install && \
 echo "tec_sis4:tec_sis4" > /work/one_auth
@@ -45,3 +38,4 @@ EXPOSE 2633
 
 
 CMD ["run", "--user=gitlab-runner", "--working-directory=/home/gitlab-runner"]
+
