@@ -29,7 +29,8 @@ sed -i 's/err = vm.TerminateHard()/err = vm.Action("delete")/g' $GOPATH/src/gith
 cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula && \
 make build && \
 make install && \
-echo "tec_sis4:tec_sis4" > /work/one_auth
+#OpenNebula User+Password
+echo "user:pass" > /work/one_auth
 
 ENV ONE_AUTH $HOME/work/one_auth
 ENV ONE_XMLRPC http://nebula.cesga.es:2633/RPC2
