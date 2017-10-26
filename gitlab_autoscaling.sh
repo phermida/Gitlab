@@ -32,6 +32,7 @@ echo "PS1='[\u@\h \W$(__docker_machine_ps1)]\$ '" > ~/.bashrc
 
 #4. Register the runner
 docker exec -it gitlab-runner gitlab-runner register
+#Token: 2BJy8fjkMxgaQw82aTDs
 #Complete with echoes
 
 #5. OpenNebula plugin
