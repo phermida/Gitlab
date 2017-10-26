@@ -5,9 +5,6 @@ RUN apt-get update && \
 curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
 chmod +x /tmp/docker-machine && \
 sudo cp /tmp/docker-machine /usr/local/bin/docker-machine && \
-cd ~/etc/bash_completion.d && \
-scripts=( docker-machine-prompt.bash docker-machine-wrapper.bash docker-machine.bash ); for i in "${scripts[@]}"; do sudo wget https://raw.githubusercontent.com/docker/machine/v0.13.0/contrib/completion/bash/${i} -P /etc/bash_completion.d; done && \
-cd && \
 docker exec -it gitlab-runner gitlab-runner register
 
 RUN apt-get update && \
