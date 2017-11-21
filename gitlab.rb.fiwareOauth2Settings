@@ -15,8 +15,8 @@
   {
     'name' => 'filab',
 #    'name' => 'oauth2_generic',
-    'app_id' => '00b379df9590445799f24ccd511e9863',
-    'app_secret' => '358b9c119c074b6588d909ca1be08da9',
+    'app_id' => '',
+    'app_secret' => '',
     'args' => {
 #      client_options: {
 #        'site' => 'https://account.lab.fiware.org', # including port if necessary
