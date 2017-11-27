@@ -41,7 +41,7 @@ web:
           user_response_structure: {
             root_path: [],
             attributes: {user_id: 'nickname', username: 'displayName', email: 'email' }
-          }
+          },
           name: 'filab',
           strategy_class: "OmniAuth::Strategies::FilabStrategy"
         }
