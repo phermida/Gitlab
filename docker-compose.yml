@@ -1,52 +1,7 @@
 web:
-  image: 'gitlab/gitlab-ce:latest'
+  image: 'gitlab/gitlab-ce:10.0.2-ce.0'
   restart: always
   hostname: 'gitlab.example.com'
-  environment:
-    GITLAB_OMNIBUS_CONFIG: |
-      external_url 'xxxxxxxxxxx'
-      gitlab_rails['ldap_enabled'] = true
-      gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
-      main:
-        label: 'LDAP'
-        host: 'replicaldap.cesga.es'
-         port: 389
-         uid: 'mail'
-         bind_dn: 'mail=xxxxxxxxxxx,ou=Personas,ou=CESGA,dc=cesga,dc=es'
-         password: 'xxxxxxxxxxx'
-         encryption: 'plain'
-         verify_certificates: true
-         ca_file: ''
-         ssl_version: ''
-         active_directory: false
-         allow_username_or_email_login: false
-         block_auto_created_users: false
-         base: 'ou=usershpc,ou=Usuarios,ou=CESGA,dc=cesga,dc=es'
-         user_filter: ''
-         attributes:
-           username: ['mail']
-           email:    ['mail']
-           name:       'cn'
-           first_name: 'cn'
-           last_name:  'sn'
-      gitlab_rails['omniauth_enabled'] = true
-      gitlab_rails['omniauth_allow_single_sign_on'] = ['filab']
-      gitlab_rails['omniauth_block_auto_created_users'] = false
-      gitlab_rails['omniauth_providers'] = [
-      {
-        'name' => 'filab',
-        'app_id' => 'xxxxxxxxxxx',
-        'app_secret' => 'xxxxxxxxxxx',
-        'args' => {
-          user_response_structure: {
-            root_path: [],
-            attributes: {user_id: 'nickname', username: 'displayName', email: 'email' }
-          },
-          name: 'filab',
-          strategy_class: "OmniAuth::Strategies::FilabStrategy"
-        }
-      }
-      ]
   ports:
     - '80:80'
     - '443:443'
@@ -55,3 +10,8 @@ web:
     - '/srv/gitlab/config:/etc/gitlab'
     - '/srv/gitlab/logs:/var/log/gitlab'
     - '/srv/gitlab/data:/var/opt/gitlab'
+    - '/srv/gitlab/initconfig/gitlab.rb:/etc/gitlab/gitlab.rb'
+    - '/srv/gitlab/initconfig/filab_strategy.rb:/opt/gitlab/embedded/service/gitlab-rails/lib/omni_auth/strategies/filab_strategy.rb'
+
+
+
