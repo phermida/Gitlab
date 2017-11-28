@@ -3,6 +3,8 @@ require 'omniauth-oauth2'
 # this OmniAuth-Strategy uses the Keyrock Identity Management
 # see http://catalogue.fiware.org/enablers/identity-management-keyrock
 # The server url is from the public FIWARE Lab instance.
+# Ubicación (inside Docker): /opt/gitlab/embedded/service/gitlab-rails/lib/omni_auth/strategies/
+
 module OmniAuth
   module Strategies
     class FilabStrategy < OmniAuth::Strategies::OAuth2
