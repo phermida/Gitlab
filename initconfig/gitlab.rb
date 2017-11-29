@@ -197,11 +197,11 @@ external_url 'http://10.38.3.80'
   gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
     main:
       label: 'LDAP'
-      host: 'replicaldap.cesga.es'
+      host: ''
       port: 389
       uid: 'mail'
-      bind_dn: 'mail=gitlab@cesga.es,ou=Personas,ou=CESGA,dc=cesga,dc=es'
-      password: '#git.lab#'
+      bind_dn: ''
+      password: ''
       encryption: 'plain'
       verify_certificates: true
       ca_file: ''
@@ -209,7 +209,7 @@ external_url 'http://10.38.3.80'
       active_directory: false
       allow_username_or_email_login: false
       block_auto_created_users: false
-      base: 'ou=usershpc,ou=Usuarios,ou=CESGA,dc=cesga,dc=es'
+      base: ''
       user_filter: ''
       attributes:
         username: ['mail']
@@ -251,8 +251,8 @@ external_url 'http://10.38.3.80'
   gitlab_rails['omniauth_providers'] = [
   {
     'name' => 'filab',
-    'app_id' => '12568290c346411d8c1cfa2bdddc6b40',
-    'app_secret' => 'ba2f325a14da4da4aeb6b34eaa60cea2',
+    'app_id' => '',
+    'app_secret' => '',
     'args' => {
        user_response_structure: {
          root_path: [],
