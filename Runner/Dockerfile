@@ -1,5 +1,5 @@
 #Dockerfile with the full deployment of gitlab-runner+docker-machine+opennebula-plugin
-FROM gitlab/gitlab-runner:v10.1.0
+FROM gitlab/gitlab-runner
 
 RUN apt-get update && \
 curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && \
@@ -28,24 +28,11 @@ go get github.com/OpenNebula/docker-machine-opennebula && \
 sed -i 's/err = vm.TerminateHard()/err = vm.Action("delete")/g' $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula/opennebula.go && \
 cd $GOPATH/src/github.com/OpenNebula/docker-machine-opennebula && \
 make build && \
-make install && \
-#OpenNebula User+Password
-echo "user:pass" > /work/one_auth
+make install 
 
-ENV ONE_AUTH $HOME/work/one_auth
-ENV ONE_XMLRPC http://nebula.cesga.es:2633/RPC2
 ENV PATH $HOME/work/bin:$PATH
 
 EXPOSE 2633
 
 
 CMD ["run", "--user=gitlab-runner", "--working-directory=/home/gitlab-runner"]
-
-#Al terminar, registrar el runner y añadir el driver a config.toml
-#  [runners.machine]
-#    IdleCount = 0
-#    MachineDriver = "opennebula"
-#    MachineName = "job-runner-%s"
-#    MachineOptions = [
-#      "opennebula-template-id=565"
-#    ]

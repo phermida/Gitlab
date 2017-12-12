@@ -1,0 +1,54 @@
+###############################################################################
+#Runner registry
+###############################################################################
+# $ docker exec -it CONTAINER_NAME gitlab-runner register
+# Running in system-mode.                            
+#                                                    
+# Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com/):
+# XXXXXXXXXXXXXXXXXXXXX
+# Please enter the gitlab-ci token for this runner:
+# XXXXXXXXXXXXXXXXXXXXX
+# Please enter the gitlab-ci description for this runner:
+# [478ff05b750e]: Gitlab-runner + docker-machine (OpenNebula)                    
+# Please enter the gitlab-ci tags for this runner (comma separated):
+# 
+# Whether to lock the Runner to current project [true/false]:
+# [true]: false
+# Registering runner... succeeded                     runner=_az2Pp6T
+# Please enter the executor: docker-ssh, parallels, shell, docker+machine, docker-ssh+machine, docker, ssh, virtualbox, kubernetes:
+# docker+machine
+# Please enter the default Docker image (e.g. ruby:2.1):
+# ubuntu:xenial
+# Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+
+###############################################################################
+# Runner configuration at /etc/gitlab-runner/config.toml
+###############################################################################
+# concurrent = 10
+# check_interval = 0
+# 
+# [[runners]]
+#   name = "Gitlab-runner + docker-machine (OpenNebula)"
+#   url = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#   token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#   executor = "docker+machine"
+#   [runners.docker]
+#     tls_verify = false
+#     image = "ubuntu:xenial"
+#     privileged = true 
+#     disable_cache = false
+#     volumes = ["/cache"]
+#     shm_size = 0
+#   [runners.cache]
+#  [runners.machine]
+#    IdleCount = 0
+#    MachineDriver = "opennebula"
+#    MachineName = "job-runner-%s"
+#    MachineOptions = [
+#      "opennebula-template-id=XXXXXXXXX",
+#      "opennebula-xmlrpcurl=XXXXXXXXX",
+#      "opennebula-user=XXXXXXX",
+#      "opennebula-password=XXXXXXXX",
+#      "engine-registry-mirror=http://10.38.3.127:6000"
+#    ]
+
