@@ -5,13 +5,15 @@ web:
   ports:
     - '80:80'
     - '443:443'
-    - '26:22'
+    - '22:22'
   volumes:
     - '/srv/gitlab/config:/etc/gitlab'
     - '/srv/gitlab/logs:/var/log/gitlab'
     - '/srv/gitlab/data:/var/opt/gitlab'
+    - '/srv/gitlab/data/.ssh/authorized_keys:/gitlab-data/ssh/authorized_keys'
     - '/srv/gitlab/initconfig/gitlab.rb:/etc/gitlab/gitlab.rb'
     - '/srv/gitlab/initconfig/filab_strategy.rb:/opt/gitlab/embedded/service/gitlab-rails/lib/omni_auth/strategies/filab_strategy.rb'
+
 
 
 

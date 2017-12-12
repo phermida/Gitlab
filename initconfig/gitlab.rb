@@ -10,7 +10,7 @@
 ##! URL on which GitLab will be reachable.
 ##! For more details on configuring external_url see:
 ##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
-external_url ''
+external_url 'https://gitlab.srv.cesga.es/'
 
 ## Roles for multi-instance GitLab
 ##! The default is to have no roles enabled, which results in GitLab running as an all-in-one instance.
@@ -197,11 +197,11 @@ external_url ''
   gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
     main:
       label: 'LDAP'
-      host: ''
+      host: 'XXXXXXXXXXXXXXX'
       port: 389
       uid: 'mail'
-      bind_dn: ''
-      password: ''
+      bind_dn: 'XXXXXXXXXXXXXXX'
+      password: 'XXXXXXXXXXXXXXXXXX'
       encryption: 'plain'
       verify_certificates: true
       ca_file: ''
@@ -209,7 +209,7 @@ external_url ''
       active_directory: false
       allow_username_or_email_login: false
       block_auto_created_users: false
-      base: ''
+      base: 'XXXXXXXXXXXXXXXXXX'
       user_filter: ''
       attributes:
         username: ['mail']
@@ -251,8 +251,8 @@ external_url ''
   gitlab_rails['omniauth_providers'] = [
   {
     'name' => 'filab',
-    'app_id' => '',
-    'app_secret' => '',
+    'app_id' => 'XXXXXXXXXXXXXXXXXX',
+    'app_secret' => 'XXXXXXXXXXXXXXXXXX',
     'args' => {
        user_response_structure: {
          root_path: [],
@@ -317,7 +317,7 @@ external_url ''
 # high_availability['mountpoint'] = ["/var/opt/gitlab/git-data", "/var/opt/gitlab/gitlab-rails/shared"]
 
 ### GitLab Shell settings for GitLab
-# gitlab_rails['gitlab_shell_ssh_port'] = 22
+ gitlab_rails['gitlab_shell_ssh_port'] = 22
 # gitlab_rails['gitlab_shell_git_timeout'] = 800
 
 ### Extra customization
@@ -830,13 +830,13 @@ external_url ''
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html
 ################################################################################
 
-# nginx['enable'] = true
+ nginx['enable'] = true
 # nginx['client_max_body_size'] = '250m'
-# nginx['redirect_http_to_https'] = false
-# nginx['redirect_http_to_https_port'] = 80
+ nginx['redirect_http_to_https'] = true
+ nginx['redirect_http_to_https_port'] = 80
 
 ##! Most root CA's are included by default
-# nginx['ssl_client_certificate'] = "/etc/gitlab/ssl/ca.crt"
+# nginx['ssl_client_certificate'] = "/etc/gitlab/ssl/star_srv_cesga_es.crt"
 
 ##! enable/disable 2-way SSL client authentication
 # nginx['ssl_verify_client'] = "off"
@@ -844,8 +844,8 @@ external_url ''
 ##! if ssl_verify_client on, verification depth in the client certificates chain
 # nginx['ssl_verify_depth'] = "1"
 
-# nginx['ssl_certificate'] = "/etc/gitlab/ssl/#{node['fqdn']}.crt"
-# nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/#{node['fqdn']}.key"
+ nginx['ssl_certificate'] = "/etc/gitlab/ssl/star_srv_cesga_es_bundle.crt"
+ nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/star.srv.cesga.es_privatekey_bundle.pem"
 # nginx['ssl_ciphers'] = "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
 # nginx['ssl_prefer_server_ciphers'] = "on"
 
@@ -860,7 +860,7 @@ external_url ''
 # nginx['ssl_session_timeout'] = "5m"
 
 # nginx['ssl_dhparam'] = nil # Path to dhparams.pem, eg. /etc/gitlab/ssl/dhparams.pem
-# nginx['listen_addresses'] = ['*', '[::]']
+# nginx['listen_addresses'] = ['10.38.3.148']
 
 ##! **Defaults to forcing web browsers to always communicate using only HTTPS**
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#setting-http-strict-transport-security
@@ -1023,17 +1023,19 @@ external_url ''
 ################################################################################
 
 ##! Define to enable GitLab Pages
-# pages_external_url "http://pages.example.com/"
-# gitlab_pages['enable'] = false
+# gitlab_pages['enable'] = true
+ pages_external_url 'https://gitlab.srv.cesga.es'
 
 ##! Configure to expose GitLab Pages on external IP address, serving the HTTP
-# gitlab_pages['external_http'] = []
+# gitlab_pages['external_http'] = ['10.38.3.148:80']
 
 ##! Configure to expose GitLab Pages on external IP address, serving the HTTPS
-# gitlab_pages['external_https'] = []
+# gitlab_pages['external_https'] = ['10.38.3.148:80']
 
+# gitlab_pages['cert'] = "/etc/gitlab/ssl/pages-nginx.crt"
+# gitlab_pages['cert_key'] = "/etc/gitlab/ssl/pages-nginx.key"
 # gitlab_pages['listen_proxy'] = "localhost:8090"
-# gitlab_pages['redirect_http'] = true
+# gitlab_pages['redirect_http'] = false
 # gitlab_pages['use_http2'] = true
 # gitlab_pages['dir'] = "/var/opt/gitlab/gitlab-pages"
 # gitlab_pages['log_directory'] = "/var/log/gitlab/gitlab-pages"
@@ -1053,9 +1055,15 @@ external_url ''
 # You just have to change the key "nginx['some_settings']" with "pages_nginx['some_settings']"
 
 # Below you can find settings that are exclusive to "GitLab Pages NGINX"
-# pages_nginx['enable'] = false
+# pages_external_url 'https://gitlab.srv.cesga.es'
 
-# gitlab_rails['pages_path'] = "/mnt/storage/pages"
+# gitlab_rails['pages_path'] = "shared/pages/"
+# pages_nginx['enable'] = true
+ pages_nginx['redirect_http_to_https'] = true
+# pages_nginx['redirect_http_to_https_port'] = 80
+
+ pages_nginx['ssl_certificate'] = "/etc/gitlab/ssl/star_srv_cesga_es.crt"
+ pages_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/star.srv.cesga.es_privatekey.pem"
 
 ################################################################################
 ## GitLab CI
