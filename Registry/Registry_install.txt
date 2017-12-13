@@ -1,0 +1,5 @@
+#Registry on Docker container 
+docker run -d -p 6000:5000 \
+    -e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \
+    --restart always \
+    --name registry registry:2
